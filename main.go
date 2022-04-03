@@ -11,9 +11,11 @@ import (
 func main() {
 	l := log.New(os.Stdout, "product-api : ", log.LstdFlags)
 	hh := handlers.NewHello(l)
+	gh := handlers.NewGoodBye(l)
 
 	sm := http.NewServeMux()
-	sm.Handle("/hello", hh)
+	sm.Handle("/", hh)
+	sm.Handle("/goodbye", gh)
 
 	http.ListenAndServe(":8080", sm)
 }
