@@ -1,15 +1,19 @@
 package main
 
 import (
+	"log"
 	"net/http"
+	"os"
 
 	"github.com/xvbnm48/building-microservice-golang/handlers"
 )
 
 func main() {
-	http.HandleFunc("/", handlers.HelloWorld)
+	l := log.New(os.Stdout, "product-api : ", log.LstdFlags)
+	hh := handlers.NewHello(l)
 
-	http.HandleFunc("/goodbye", handlers.GoodBye)
+	sm := http.NewServeMux()
+	sm.Handle("/hello", hh)
 
-	http.ListenAndServe(":8080", nil)
+	http.ListenAndServe(":8080", sm)
 }
