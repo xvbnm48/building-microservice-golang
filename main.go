@@ -22,6 +22,7 @@ func main() {
 	sm.Handle("/goodbye", gh)
 	sm.Handle("/product", ph)
 	// this is http server
+	// this is main
 	s := &http.Server{
 		Addr:         ":8080",
 		Handler:      sm,
