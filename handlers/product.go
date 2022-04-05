@@ -15,6 +15,7 @@ func NewProduct(l *log.Logger) *Products {
 	return &Products{l}
 }
 
+// make json encoding
 func (p *Products) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 	lp := data.GetProducts()
 	// d, err := json.Marshal(lp)
