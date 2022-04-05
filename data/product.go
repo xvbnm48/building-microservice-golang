@@ -1,39 +1,52 @@
 package data
 
-import "time"
+import (
+	"encoding/json"
+	"io"
+	"time"
+)
 
 type Product struct {
-	ID          int
-	Name        string
-	Description string
-	Price       float32
-	SKU         string
-	CreatedOn   string
-	UpdatedOn   string
-	DeletedOn   string
+	ID          int     `json:"id"`
+	Name        string  `json:"name"`
+	Description string  `json:"description"`
+	Price       float32 `json:"price"`
+	SKU         string  `json:"sku"`
+	CreatedOn   string  `json:"-"`
+	UpdatedOn   string  `json:"-"`
+	DeletedOn   string  `json:"-"`
 }
 
-func GetProducts() []*Product {
+type Products []*Product
+
+func (p *Products) ToJSON(w io.Writer) error {
+	e := json.NewEncoder(w)
+	return e.Encode(p)
+}
+
+func GetProducts() Products {
 	return productList
 }
 
 var productList = []*Product{
 	&Product{
 		ID:          1,
-		Name:        "Latte",
-		Description: "Frothy Milky Coffe",
+		Name:        "latte",
+		Description: "fronth milky coffe",
 		Price:       2.45,
-		SKU:         "abc323",
+		SKU:         "absss9",
 		CreatedOn:   time.Now().UTC().String(),
 		UpdatedOn:   time.Now().UTC().String(),
+		DeletedOn:   time.Now().UTC().String(),
 	},
 	&Product{
 		ID:          2,
-		Name:        "Expresso",
-		Description: "short and strong coffe without milk",
+		Name:        "expresso",
+		Description: "short coffe without milk",
 		Price:       1.99,
-		SKU:         "fdj34",
+		SKU:         "absss4",
 		CreatedOn:   time.Now().UTC().String(),
 		UpdatedOn:   time.Now().UTC().String(),
+		DeletedOn:   time.Now().UTC().String(),
 	},
 }
