@@ -17,11 +17,29 @@ func NewProduct(l *log.Logger) *Products {
 
 // make json encoding
 func (p *Products) ServeHTTP(w http.ResponseWriter, r *http.Request) {
+	if r.Method == http.MethodGet {
+		p.GetProducts(w, r)
+		return
+	}
+	if r.Method == http.MethodPost {
+		p.addProduct(w, r)
+		return
+	}
+
+	w.WriteHeader(http.StatusMethodNotAllowed)
+
+}
+
+func (p *Products) GetProducts(w http.ResponseWriter, r *http.Request) {
+	p.l.Println("handler GET Product")
 	lp := data.GetProducts()
-	// d, err := json.Marshal(lp)
 	err := lp.ToJSON(w)
 	if err != nil {
 		http.Error(w, "unable to marshal json", http.StatusInternalServerError)
 	}
+}
+
+func (p *Products) addProduct(w http.ResponseWriter, r *http.Request) {
+	p.l.Println("handler POST Product")
 
 }
