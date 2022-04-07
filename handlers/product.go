@@ -42,4 +42,12 @@ func (p *Products) GetProducts(w http.ResponseWriter, r *http.Request) {
 func (p *Products) addProduct(w http.ResponseWriter, r *http.Request) {
 	p.l.Println("handler POST Product")
 
+	prod := &data.Product{}
+	err := prod.FromJSON(r.Body)
+	if err != nil {
+		http.Error(w, "unable to marshal JSON", http.StatusBadRequest)
+	}
+
+	p.l.Printf("Prod: %#v", prod)
+
 }
